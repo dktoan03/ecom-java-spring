@@ -34,4 +34,8 @@ public class UserService {
     System.out.println(newUser);
     return newUser;
   }
+
+  public void deleteUserById(long id) {
+    this.userRepository.deleteById(id);
+  }
 }

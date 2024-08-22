@@ -48,9 +48,9 @@
                       <td>${user.getEmail()}</td>
                       <td>${user.getFullName()}</td>
                       <td>
-                        <a href="/admin/user/${user.getId()}"" class=" btn btn-success">View</a>
-                        <button class="btn btn-warning  mx-2">Update</button>
-                        <button class="btn btn-danger">Delete</button>
+                        <a href="/admin/user/${user.getId()}" class=" btn btn-success">View</a>
+                        <a href="/admin/user/update/${user.getId()}" class="btn btn-warning  mx-2">Update</a>
+                        <a href="/admin/user/delete/${user.getId()}" class="btn btn-danger">Delete</a>
                       </td>
                     </tr>
                   </c:forEach>

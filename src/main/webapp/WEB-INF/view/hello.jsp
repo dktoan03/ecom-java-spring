@@ -17,11 +17,12 @@
     </head>
 
     <body>
-      hello from jsp
-      <h1>
+      <!-- hello from jsp -->
+      <!-- <h1>
         ${eric}
       </h1>
-      <button class="btn btn-success">Submit</button>
+      <button class="btn btn-success">Submit</button> -->
+      <a href="admin/user">User list</a>
     </body>
 
     </html>
