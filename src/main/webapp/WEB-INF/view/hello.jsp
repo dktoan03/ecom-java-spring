@@ -22,7 +22,8 @@
         ${eric}
       </h1>
       <button class="btn btn-success">Submit</button> -->
-      <a href="admin/user">User list</a>
+      <a href="/admin/user" class=" btn btn-success">User list</a>
+
     </body>
 
     </html>
