@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop;
+package vn.dktoan03.laptopshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

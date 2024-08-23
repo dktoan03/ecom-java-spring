@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.config;
+package vn.dktoan03.laptopshop.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

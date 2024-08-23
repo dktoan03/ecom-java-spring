@@ -1,11 +1,11 @@
-package vn.hoidanit.laptopshop.sevice;
+package vn.dktoan03.laptopshop.sevice;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import vn.hoidanit.laptopshop.domain.User;
-import vn.hoidanit.laptopshop.repository.UserRepository;
+import vn.dktoan03.laptopshop.domain.User;
+import vn.dktoan03.laptopshop.repository.UserRepository;
 
 @Service
 public class UserService {

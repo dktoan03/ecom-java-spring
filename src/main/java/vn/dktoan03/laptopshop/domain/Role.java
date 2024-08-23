@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.domain;
+package vn.dktoan03.laptopshop.domain;
 
 import java.util.Set;
 
