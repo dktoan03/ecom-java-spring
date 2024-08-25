@@ -1,9 +1,12 @@
 package vn.dktoan03.laptopshop.domain;
 
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +26,10 @@ public class Product {
   private long sold;
   private String factory;
   private String target;
+
+  // not needed, can skip
+  // @OneToMany(mappedBy = "product")
+  // private Set<OrderDetail> orderDetails;
 
   public long getId() {
     return id;
