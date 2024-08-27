@@ -26,7 +26,7 @@
                                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Orders</li>
                             </ol>
-                            <div>table order</div>
+                            <div>Table order</div>
                         </div>
                     </main>
                     <jsp:include page="../layout/footer.jsp" />
