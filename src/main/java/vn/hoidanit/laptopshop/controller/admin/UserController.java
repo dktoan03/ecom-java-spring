@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/admin/user/create")
-    public String createUserPage(Model model, @ModelAttribute("newUser") @Valid User hoidanit,
+    public String createUserPage(@ModelAttribute("newUser") @Valid User hoidanit,
             BindingResult bindingResult, @RequestParam("hoidanitFile") MultipartFile file) {
 
         List<FieldError> errors = bindingResult.getFieldErrors();
