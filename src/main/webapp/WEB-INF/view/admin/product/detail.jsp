@@ -42,6 +42,9 @@
                           Product information
                         </div>
                         <ul class="list-group list-group-flush">
+                          <li class="list-group-item">
+                            <img src="/images/product/${product.image}" alt="Girl in a jacket" height="300">
+                          </li>
                           <li class="list-group-item">ID: ${product.id}</li>
                           <li class="list-group-item">Name: ${product.name}</li>
                           <li class="list-group-item">Price: ${product.price}</li>
@@ -49,13 +52,6 @@
                           <li class="list-group-item">Target: ${product.target}</li>
                           <li class="list-group-item">Short Desc: ${product.shortDesc}</li>
                           <li class="list-group-item">Detail Desc: ${product.detailDesc}</li>
-                          <li class="list-group-item">Image:
-                            <br />
-                            <img src="/images/product/${product.image}" alt="Girl in a jacket" height="300">
-                          </li>
-
-
-
                         </ul>
                       </div>
                       <a href="/admin/product" class="btn btn-success mt-3">Back</a>

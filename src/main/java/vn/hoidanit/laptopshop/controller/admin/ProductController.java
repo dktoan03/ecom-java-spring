@@ -57,7 +57,7 @@ public class ProductController {
 
     @GetMapping("/admin/product/{id}")
     public String getUserDetailPage(Model model, @PathVariable long id) {
-        Product product = this.productService.getProductById(id);
+        Product product = this.productService.getProductById(id).get();
         model.addAttribute("product", product);
         model.addAttribute("id", id);
         return "admin/product/detail";
@@ -80,17 +80,28 @@ public class ProductController {
 
     @GetMapping("/admin/product/update/{id}") // GET
     public String getUpdateProductPage(Model model, @PathVariable long id) {
-        Product currentProduct = this.productService.getProductById(id);
+        Product currentProduct = this.productService.getProductById(id).get();
         model.addAttribute("newProduct", currentProduct);
         return "admin/product/update";
     }
 
     @PostMapping("/admin/product/update")
-    public String postProductUser(Model model, @ModelAttribute("newProduct") Product hoidanit) {
-        Product currentProduct = this.productService.getProductById(hoidanit.getId());
+    public String postUpdateProduct(@ModelAttribute("newProduct") @Valid Product hoidanit,
+            BindingResult newProductBindingResult, @RequestParam("hoidanitFile") MultipartFile file) {
+
+        if (newProductBindingResult.hasErrors()) {
+            return "admin/product/update";
+        }
+        Product currentProduct = this.productService.getProductById(hoidanit.getId()).get();
         if (currentProduct != null) {
             currentProduct.setDetailDesc(hoidanit.getDetailDesc());
-
+            currentProduct.setFactory(hoidanit.getFactory());
+            currentProduct.setName(hoidanit.getName());
+            currentProduct.setQuantity(hoidanit.getQuantity());
+            currentProduct.setSold(hoidanit.getSold());
+            currentProduct.setTarget(hoidanit.getTarget());
+            currentProduct.setShortDesc(hoidanit.getShortDesc());
+            currentProduct.setPrice(hoidanit.getPrice());
             // bug here
             this.productService.handleSaveProduct(currentProduct);
         }

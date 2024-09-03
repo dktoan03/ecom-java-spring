@@ -23,7 +23,8 @@ public class User {
     private long id;
 
     @NotEmpty(message = "Email cannot be empty")
-    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[azA-Z0-9.-]+$")
+    // @Email(message = "Email is not valid", regexp =
+    // "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[azA-Z0-9.-]+$")
     private String email;
 
     @NotNull
