@@ -57,7 +57,7 @@ public class ProductController {
 
     @GetMapping("/admin/product/{id}")
     public String getUserDetailPage(Model model, @PathVariable long id) {
-        Product product = this.productService.getProductById(id).get();
+        Product product = this.productService.getProductById(id);
         model.addAttribute("product", product);
         model.addAttribute("id", id);
         return "admin/product/detail";
@@ -80,7 +80,7 @@ public class ProductController {
 
     @GetMapping("/admin/product/update/{id}") // GET
     public String getUpdateProductPage(Model model, @PathVariable long id) {
-        Product currentProduct = this.productService.getProductById(id).get();
+        Product currentProduct = this.productService.getProductById(id);
         model.addAttribute("newProduct", currentProduct);
         return "admin/product/update";
     }
@@ -92,8 +92,13 @@ public class ProductController {
         if (newProductBindingResult.hasErrors()) {
             return "admin/product/update";
         }
-        Product currentProduct = this.productService.getProductById(hoidanit.getId()).get();
+        Product currentProduct = this.productService.getProductById(hoidanit.getId());
+
         if (currentProduct != null) {
+            if (!file.isEmpty()) {
+                String avatar = this.uploadService.handleSaveUploadFile(file, "product");
+                currentProduct.setImage(avatar);
+            }
             currentProduct.setDetailDesc(hoidanit.getDetailDesc());
             currentProduct.setFactory(hoidanit.getFactory());
             currentProduct.setName(hoidanit.getName());

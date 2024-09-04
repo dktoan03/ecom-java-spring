@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
         <meta name="author" content="Hỏi Dân IT" />
-        <title>Create Product - Hỏi Dân IT</title>
+        <title>Update Product - Hỏi Dân IT</title>
         <link href="/css/styles.css" rel="stylesheet" />
 
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -49,9 +49,9 @@
                 <div class="mt-5">
                   <div class="row">
                     <div class="col-md-6 col-12 mx-auto">
-                      <h3>Create a product</h3>
+                      <h3>Update a product</h3>
                       <hr />
-                      <form:form method="post" action="/admin/product/create" modelAttribute="newProduct" class="row"
+                      <form:form method="post" action="/admin/product/update" modelAttribute="newProduct" class="row"
                         enctype="multipart/form-data">
                         <c:set var="errorName">
                           <form:errors path="name" cssClass="invalid-feedback" />
@@ -139,7 +139,7 @@
                           <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview" />
                         </div>
                         <div class="col-12 mb-5">
-                          <button type="submit" class="btn btn-primary">Create</button>
+                          <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                       </form:form>
 
