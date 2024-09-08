@@ -57,4 +57,8 @@ public class UserService {
     public Boolean checkEmailExist(String email) {
         return this.userRepository.existsByEmail(email);
     }
+
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
 }
