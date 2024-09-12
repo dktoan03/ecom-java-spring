@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -16,10 +17,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.service.UserService;
 
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
-
-  private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+  @Autowired
+  private UserService userService;
 
   protected String determineTargetUrl(final Authentication authentication) {
 
@@ -38,13 +41,22 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     throw new IllegalStateException();
   }
 
-  protected void clearAuthenticationAttributes(HttpServletRequest request) {
+  protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
     HttpSession session = request.getSession(false);
     if (session == null) {
       return;
     }
     session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+
+    String email = authentication.getName();
+    User user = this.userService.getUserByEmail(email);
+    if (user != null) {
+      session.setAttribute("fullName", user.getFullName());
+      session.setAttribute("avatar", user.getAvatar());
+    }
   }
+
+  private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -57,7 +69,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     redirectStrategy.sendRedirect(request, response, targetUrl);
-    clearAuthenticationAttributes(request);
+    clearAuthenticationAttributes(request, authentication);
   }
 
 }
