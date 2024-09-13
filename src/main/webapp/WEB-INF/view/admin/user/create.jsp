@@ -8,9 +8,9 @@
                 <meta charset="utf-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
-                <meta name="author" content="Hỏi Dân IT" />
-                <title>Create User - Hỏi Dân IT</title>
+                <meta name="description" content="dkt - Dự án laptopshop" />
+                <meta name="author" content="dkt" />
+                <title>Create User - dkt</title>
                 <link href="/css/styles.css" rel="stylesheet" />
 
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -96,7 +96,7 @@
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label for="avatarFile" class="form-label">Avatar:</label>
                                                     <input class="form-control" type="file" id="avatarFile"
-                                                        name="hoidanitFile" accept=".png, .jpg, .jpeg" />
+                                                        name="varFile" accept=".png, .jpg, .jpeg" />
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <img style="max-height: 250px; display: none;" alt="avatar preview"

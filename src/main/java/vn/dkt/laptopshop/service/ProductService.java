@@ -1,0 +1,81 @@
+package vn.dkt.laptopshop.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import vn.dkt.laptopshop.domain.Cart;
+import vn.dkt.laptopshop.domain.CartDetail;
+import vn.dkt.laptopshop.domain.Product;
+import vn.dkt.laptopshop.domain.User;
+import vn.dkt.laptopshop.repository.CartDetailRepository;
+import vn.dkt.laptopshop.repository.CartRepository;
+import vn.dkt.laptopshop.repository.ProductRepository;
+
+@Service
+public class ProductService {
+  private final ProductRepository productRepository;
+  private final CartRepository cartRepository;
+  private final CartDetailRepository cartDetailRepository;
+  private final UserService userService;
+
+  public ProductService(ProductRepository productRepository, CartRepository cartRepository,
+      CartDetailRepository cartDetailRepository, UserService userService) {
+    this.productRepository = productRepository;
+    this.cartRepository = cartRepository;
+    this.cartDetailRepository = cartDetailRepository;
+    this.userService = userService;
+  }
+
+  public void handleDeleteProduct(long id) {
+    this.productRepository.deleteById(id);
+  }
+
+  public Product handleSaveProduct(Product newProduct) {
+    return this.productRepository.save(newProduct);
+  }
+
+  public List<Product> getAllProducts() {
+    return this.productRepository.findAll();
+  }
+
+  public Product getProductById(long id) {
+    return this.productRepository.findById(id);
+  }
+
+  public void deleteProduct(long id) {
+    this.productRepository.deleteById(id);
+  }
+
+  public void handleAddProductToCart(String email, long productId) {
+    User user = this.userService.getUserByEmail(email);
+    if (user != null) {
+      Cart cart = this.cartRepository.findByUser(user);
+      if (cart == null) {
+        cart = new Cart();
+        cart.setUser(user);
+        cart.setSum(0);
+        this.cartRepository.save(cart);
+      }
+      Product product = this.productRepository.findById(productId);
+      if (product != null) {
+        CartDetail cartDetail = this.cartDetailRepository.findByCartAndProduct(cart, product);
+        if (cartDetail == null) {
+          cartDetail = new CartDetail();
+          cartDetail.setCart(cart);
+          cartDetail.setProduct(product);
+          cartDetail.setPrice(product.getPrice());
+          cartDetail.setQuantity(1);
+          cart.setSum(cart.getSum() + 1);
+          this.cartRepository.save(cart);
+          this.cartDetailRepository.save(cartDetail);
+        } else {
+          cartDetail.setQuantity(cartDetail.getQuantity() + 1);
+          this.cartDetailRepository.save(cartDetail);
+
+        }
+
+      }
+    }
+  }
+}
