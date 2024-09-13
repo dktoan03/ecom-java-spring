@@ -9,11 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -22,17 +22,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty(message = "Email cannot be empty")
-    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
+    @NotNull
+    @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     @NotNull
-    @Size(min = 2, message = "mk phải có tối thiểu 2 ký tự")
+    @Size(min = 2, message = "Password phải có tối thiểu 2 ký tự")
     private String password;
 
     @NotNull
-    @Size(min = 3, message = "tên phải có tối thiểu 3 ký tự")
+    @Size(min = 3, message = "Fullname phải có tối thiểu 3 ký tự")
     private String fullName;
+
     private String address;
     private String phone;
 
@@ -45,7 +46,10 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    List<Order> orders;
+    private List<Order> orders;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 
     public long getId() {
         return id;
@@ -103,13 +107,6 @@ public class User {
         this.avatar = avatar;
     }
 
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
-                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + ", role=" + role + ", orders="
-                + orders + "]";
-    }
-
     public Role getRole() {
         return role;
     }
@@ -124,6 +121,21 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
+                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + ", role=" + role + ", orders="
+                + orders + ", cart=" + cart + "]";
     }
 
 }
