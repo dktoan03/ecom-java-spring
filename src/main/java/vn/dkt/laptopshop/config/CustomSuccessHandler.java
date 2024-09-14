@@ -55,11 +55,8 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
       session.setAttribute("avatar", user.getAvatar());
       session.setAttribute("id", user.getId());
       session.setAttribute("email", user.getEmail());
-      int sum = 0;
-      if (user.getCart() != null)
-        sum = user.getCart().getSum();
+      int sum = (user.getCart() != null) ? user.getCart().getSum() : 0;
       session.setAttribute("sum", sum);
-
     }
   }
 
