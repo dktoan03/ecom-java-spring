@@ -8,7 +8,7 @@
                         <div class="col-lg-3">
                             <a href="https://var.vn" target="_blank">
                                 <h1 class="text-primary mb-0">Laptopshop</h1>
-                                <p class="text-secondary mb-0">@dkt</p>
+                                <p class="text-secondary mb-0">Cutting-Edge Technology</p>
                             </a>
                         </div>
                     </div>
@@ -16,7 +16,9 @@
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
-                            <h4 class="text-light mb-3">Chất lượng là ưu tiên hàng đầu</h4>
+                            <h4 class="text-light mb-3">Why People Like us!</h4>
+                            <p>typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+                                like Aldus PageMaker including of Lorem Ipsum.</p>
 
                         </div>
                     </div>
@@ -24,6 +26,12 @@
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Shop Info</h4>
                             <a class="btn-link" href="#">About Us</a>
+                            <a class="btn-link" href="#">Contact Us</a>
+                            <a class="btn-link" href="#">Privacy Policy</a>
+                            <a class="btn-link" href="#">Terms & Condition</a>
+                            <a class="btn-link" href="#">Return Policy</a>
+                            <a class="btn-link" href="#">FAQs & help</a>
+
 
                         </div>
                     </div>
@@ -31,13 +39,18 @@
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Account</h4>
                             <a class="btn-link" href="#">My Account</a>
+                            <a class="btn-link" href="#">Shop details</a>
+                            <a class="btn-link" href="#">Shopping cart</a>
+
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Contact</h4>
+                            <p>Address: Cau Giay, Hanoi, Vietnam</p>
+                            <p>Email: Example@gmail.com</p>
+                            <p>Phone: +0123 4567 8910</p>
                             <p>Author: dkt</p>
-                            <p>Website: <a href="https://dkt.vn" target="_blank"> dkt.vn</a></p>
                         </div>
                     </div>
                 </div>
@@ -50,7 +63,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="https://dkt.vn" target="_blank"><i
+                        <span class="text-light"><a href="/" target="_blank"><i
                                     class="fas fa-copyright text-light me-2"></i>dkt</a>, All right
                             reserved.</span>
                     </div>

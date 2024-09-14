@@ -1,43 +1,46 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- Navbar start -->
-        <div class="container-fluid fixed-top">
+        <div class="container-fluid fixed-top bg-white shadow-sm">
             <div class="container px-0">
-                <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="/" class="navbar-brand">
-                        <h1 class="text-primary display-6">Laptopshop</h1>
+                <nav class="navbar navbar-light navbar-expand-xl py-3">
+                    <a href="/" class="navbar-brand d-flex align-items-center">
+                        <h1 class="text-primary display-6 mb-0 me-2">Laptopshop</h1>
                     </a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
                     <div class="collapse navbar-collapse bg-white justify-content-between mx-5" id="navbarCollapse">
+                        <!-- Left Navigation Links -->
                         <div class="navbar-nav">
-                            <a href="/" class="nav-item nav-link active">Trang Chủ</a>
-                            <a href="/products" class="nav-item nav-link">Sản Phẩm</a>
-
+                            <a href="/" class="nav-item nav-link active text-dark fw-bold px-3">Trang Chủ</a>
+                            <a href="/products" class="nav-item nav-link text-dark fw-bold px-3">Sản Phẩm</a>
                         </div>
-                        <div class="d-flex m-3 me-0">
-
+                        <!-- Right Section (Cart, User Info) -->
+                        <div class="d-flex align-items-center">
+                            <!-- Cart Section -->
                             <c:if test="${not empty pageContext.request.userPrincipal}">
-
-                                <a href="/cart" class="position-relative me-4 my-auto">
-                                    <i class="fa fa-shopping-bag fa-2x"></i>
+                                <a href="/cart" class="position-relative me-4">
+                                    <i class="fa fa-shopping-bag fa-2x text-primary"></i>
                                     <span
-                                        class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px;">${sessionScope.sum}</span>
+                                        class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-white"
+                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px; font-size: 12px;">
+                                        ${sessionScope.sum}
+                                    </span>
                                 </a>
-                                <div class="dropdown my-auto">
-                                    <a href="#" class="dropdown" role="button" id="dropdownMenuLink"
-                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
+                                <!-- User Profile Dropdown -->
+                                <div class="dropdown">
+                                    <a href="#" class="dropdown-toggle text-dark" id="dropdownMenuLink"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fas fa-user fa-2x"></i>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-end p-4" arialabelledby="dropdownMenuLink">
-                                        <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
-                                            <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
-                                                src="/images/avatar/${sessionScope.avatar}" />
-                                            <div class="text-center my-3">
+                                    <ul class="dropdown-menu dropdown-menu-end p-4 shadow-sm"
+                                        aria-labelledby="dropdownMenuLink" style="min-width: 300px;">
+                                        <li class="d-flex align-items-center flex-column">
+                                            <img src="/images/avatar/${sessionScope.avatar}" alt="User Avatar"
+                                                class="rounded-circle mb-3 shadow" style="width: 150px; height: 150px;">
+                                            <div class="text-center fw-bold mb-2">
                                                 ${sessionScope.fullName}
                                             </div>
                                         </li>
@@ -55,16 +58,13 @@
                                         </li>
                                     </ul>
                                 </div>
-
                             </c:if>
+                            <!-- Login Section -->
                             <c:if test="${empty pageContext.request.userPrincipal}">
-                                <a href="/login" class="position-relative me-4 my-auto">
+                                <a href="/login" class="btn btn-primary text-white px-4 py-2 rounded-pill shadow-sm">
                                     Đăng nhập
                                 </a>
                             </c:if>
-
-
-
                         </div>
                     </div>
                 </nav>

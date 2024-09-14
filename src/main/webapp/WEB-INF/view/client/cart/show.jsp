@@ -61,7 +61,7 @@
 
             <div class="table-responsive">
               <table class="table table-bordered table-hover align-middle">
-                <thead class="table-light">
+                <thead class="table-light border-bottom border-primary">
                   <tr>
                     <th scope="col">Products</th>
                     <th scope="col">Name</th>
