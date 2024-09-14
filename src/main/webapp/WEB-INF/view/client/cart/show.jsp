@@ -50,15 +50,18 @@
           <div class="container py-5">
             <div class="mb-3">
               <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <ol class="breadcrumb bg-light p-3 rounded">
+                  <li class="breadcrumb-item">
+                    <a href="/" class="text-decoration-none text-primary">Home</a>
+                  </li>
                   <li class="breadcrumb-item active" aria-current="page">Chi Tiết Giỏ Hàng</li>
                 </ol>
               </nav>
             </div>
+
             <div class="table-responsive">
-              <table class="table">
-                <thead>
+              <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
                   <tr>
                     <th scope="col">Products</th>
                     <th scope="col">Name</th>
