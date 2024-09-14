@@ -49,16 +49,12 @@ public class ItemController {
 
     Cart cart = this.productService.getCartByUser(currentUser);
 
-    List<CartDetail> cartDetails = new ArrayList<>();
+    List<CartDetail> cartDetails = cart == null ? new ArrayList<>() : cart.getCartDetails();
 
     double totalPrice = 0;
 
-    if (cart != null) {
-      cartDetails = cart.getCartDetails();
-
-      for (CartDetail cartDetail : cartDetails) {
-        totalPrice += cartDetail.getPrice() * cartDetail.getQuantity();
-      }
+    for (CartDetail cartDetail : cartDetails) {
+      totalPrice += cartDetail.getPrice();
 
     }
 
