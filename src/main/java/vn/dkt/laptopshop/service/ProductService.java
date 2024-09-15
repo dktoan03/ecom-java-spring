@@ -96,7 +96,7 @@ public class ProductService {
       if (cart.getSum() > 1) {
         session.setAttribute("sum", cart.getSum() - 1);
         cart.setSum(cart.getSum() - 1);
-
+        this.cartRepository.save(cart);
       } else {
         session.setAttribute("sum", 0);
         this.cartRepository.delete(cart);
