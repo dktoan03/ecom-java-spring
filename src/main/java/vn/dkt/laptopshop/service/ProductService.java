@@ -103,4 +103,12 @@ public class ProductService {
       }
     }
   }
+
+  public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails) {
+    for (CartDetail cartDetail : cartDetails) {
+      CartDetail currentCartDetail = this.cartDetailRepository.findById(cartDetail.getId());
+      currentCartDetail.setQuantity(cartDetail.getQuantity());
+      this.cartDetailRepository.save(currentCartDetail);
+    }
+  }
 }
