@@ -54,7 +54,7 @@ public class ItemController {
     double totalPrice = 0;
 
     for (CartDetail cartDetail : cartDetails) {
-      totalPrice += cartDetail.getPrice();
+      totalPrice += cartDetail.getPrice() * cartDetail.getQuantity();
 
     }
 
