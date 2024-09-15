@@ -75,7 +75,7 @@ public class ProductService {
           this.cartRepository.save(cart);
           this.cartDetailRepository.save(cartDetail);
         } else {
-          cartDetail.setPrice(cartDetail.getPrice() + product.getPrice());
+          // cartDetail.setPrice(cartDetail.getPrice() + product.getPrice());
           cartDetail.setQuantity(cartDetail.getQuantity() + 1);
           this.cartDetailRepository.save(cartDetail);
         }
