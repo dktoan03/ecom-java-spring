@@ -15,16 +15,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import vn.dkt.laptopshop.domain.Cart;
 import vn.dkt.laptopshop.domain.CartDetail;
+import vn.dkt.laptopshop.domain.Order;
 import vn.dkt.laptopshop.domain.Product;
 import vn.dkt.laptopshop.domain.User;
 import vn.dkt.laptopshop.service.ProductService;
+import vn.dkt.laptopshop.service.UserService;
 
 @Controller
 public class ItemController {
   private final ProductService productService;
+  private final UserService userService;
 
-  public ItemController(ProductService productService) {
+  public ItemController(ProductService productService, UserService userService) {
     this.productService = productService;
+    this.userService = userService;
   }
 
   @GetMapping("product/{id}")
@@ -38,7 +42,7 @@ public class ItemController {
   public String addProductToCart(@PathVariable long id, HttpServletRequest request) {
     HttpSession session = request.getSession(false);
     String email = (String) session.getAttribute("email");
-    this.productService.handleAddProductToCart(email, id, session);
+    this.productService.handleAddProductToCart(email, id, session, 1);
     return "redirect:/";
   }
 
@@ -123,5 +127,28 @@ public class ItemController {
   @GetMapping("/thank-you")
   public String getThankYouPage() {
     return "client/cart/thanks";
+  }
+
+  @GetMapping("/order-history")
+  public String getOrderHistoryPage(HttpServletRequest request, Model model) {
+
+    HttpSession session = request.getSession(false);
+    long id = (long) session.getAttribute("id");
+    User user = this.userService.getUserById(id);
+
+    List<Order> orders = user.getOrders();
+    model.addAttribute("orders", orders);
+    return "client/cart/orderhistory";
+  }
+
+  @PostMapping("/add-more-product/{id}")
+  public String addMoreProduct(@PathVariable long id, HttpServletRequest request,
+      @RequestParam("quantity") long quantity) {
+    HttpSession session = request.getSession(false);
+    String email = (String) session.getAttribute("email");
+
+    this.productService.handleAddProductToCart(email, id, session, quantity);
+
+    return "redirect:/cart";
   }
 }

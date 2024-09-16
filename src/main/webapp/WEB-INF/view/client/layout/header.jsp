@@ -41,8 +41,12 @@
                                                 ${sessionScope.fullName}
                                             </div>
                                         </li>
-                                        <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
-                                        <li><a class="dropdown-item" href="#">Lịch sử mua hàng</a></li>
+
+                                        <c:if test="${sessionScope.role == 'ADMIN'}">
+                                            <li><a class="dropdown-item" href="/admin">Quản lý</a></li>
+                                        </c:if>
+
+                                        <li><a class="dropdown-item" href="/order-history">Lịch sử mua hàng</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
