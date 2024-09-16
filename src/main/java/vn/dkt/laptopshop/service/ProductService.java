@@ -129,21 +129,31 @@ public class ProductService {
     order.setReceiverAddress(receiverAddress);
     order.setReceiverName(receiverName);
     order.setReceiverPhone(receiverPhone);
+    order.setStatus("PENDING");
     order = this.orderRepository.save(order);
 
     Cart cart = this.cartRepository.findByUser(currentUser);
     if (cart != null) {
       List<CartDetail> cartDetails = cart.getCartDetails();
+
+      double sum = 0;
+
       for (CartDetail cartDetail : cartDetails) {
+        sum += cartDetail.getPrice() * cartDetail.getQuantity();
+
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrder(order);
         orderDetail.setPrice(cartDetail.getPrice());
         orderDetail.setQuantity(cartDetail.getQuantity());
         orderDetail.setProduct(cartDetail.getProduct());
         this.orderDetailRepository.save(orderDetail);
+
         this.cartDetailRepository.delete(cartDetail);
       }
       this.cartRepository.delete(cart);
+
+      order.setTotalPrice(sum);
+      this.orderRepository.save(order);
       session.setAttribute("sum", 0);
     }
 
