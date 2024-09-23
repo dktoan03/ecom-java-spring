@@ -157,7 +157,8 @@ public class ItemController {
 
   @GetMapping("/products")
   public String getProducts(Model model,
-      @RequestParam(value = "page", required = false, defaultValue = "1") String pageOptional) {
+      @RequestParam(value = "page", required = false, defaultValue = "1") String pageOptional,
+      @RequestParam(value = "name", required = false, defaultValue = "") String nameOptional) {
 
     int page = 1;
     final int pageSize = 6;
@@ -168,7 +169,7 @@ public class ItemController {
     }
 
     Pageable pageable = PageRequest.of(page - 1, pageSize);
-    Page<Product> productsPage = this.productService.getAllProducts(pageable);
+    Page<Product> productsPage = this.productService.getAllProducts(pageable, nameOptional);
     List<Product> products = productsPage.getContent();
 
     model.addAttribute("products", products);
