@@ -16,17 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.dkt.laptopshop.domain.Order;
 import vn.dkt.laptopshop.domain.OrderDetail;
-import vn.dkt.laptopshop.repository.OrderDetailRepository;
 import vn.dkt.laptopshop.service.OrderService;
 
 @Controller
 public class OrderController {
     private final OrderService orderService;
-    private final OrderDetailRepository orderDetailRepository;
 
-    public OrderController(OrderService orderService, OrderDetailRepository orderDetailRepository) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.orderDetailRepository = orderDetailRepository;
     }
 
     @GetMapping("/admin/order")
