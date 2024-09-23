@@ -1,6 +1,7 @@
 package vn.dkt.laptopshop.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,8 +32,17 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String getProduct(Model model, @RequestParam("page") int page) {
-        Pageable pageable = PageRequest.of(page - 1, 4);
+    public String getProduct(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int page = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                page = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+
+        }
+        final int pageSize = 4;
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<Product> productsPage = this.productService.getAllProducts(pageable);
         List<Product> products = productsPage.getContent();
         model.addAttribute("products", products);
