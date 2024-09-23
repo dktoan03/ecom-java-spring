@@ -3,6 +3,9 @@ package vn.dkt.laptopshop.controller.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -143,12 +146,34 @@ public class ItemController {
 
   @PostMapping("/add-more-product/{id}")
   public String addMoreProduct(@PathVariable long id, HttpServletRequest request,
-      @RequestParam("quantity") long quantity) {
+      @RequestParam(value = "quantity", required = false, defaultValue = "1") long quantity) {
     HttpSession session = request.getSession(false);
     String email = (String) session.getAttribute("email");
 
     this.productService.handleAddProductToCart(email, id, session, quantity);
 
     return "redirect:/cart";
+  }
+
+  @GetMapping("/products")
+  public String getProducts(Model model,
+      @RequestParam(value = "page", required = false, defaultValue = "1") String pageOptional) {
+
+    int page = 1;
+    final int pageSize = 6;
+    try {
+      page = Integer.parseInt(pageOptional);
+    } catch (Exception e) {
+
+    }
+
+    Pageable pageable = PageRequest.of(page - 1, pageSize);
+    Page<Product> productsPage = this.productService.getAllProducts(pageable);
+    List<Product> products = productsPage.getContent();
+
+    model.addAttribute("products", products);
+    model.addAttribute("currentPage", page);
+    model.addAttribute("totalPages", productsPage.getTotalPages());
+    return "client/product/show";
   }
 }
