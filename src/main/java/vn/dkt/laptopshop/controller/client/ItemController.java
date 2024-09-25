@@ -1,6 +1,7 @@
 package vn.dkt.laptopshop.controller.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -158,10 +159,14 @@ public class ItemController {
   @GetMapping("/products")
   public String getProducts(Model model,
       @RequestParam(value = "page", required = false, defaultValue = "1") String pageOptional,
-      @RequestParam(value = "name", required = false, defaultValue = "") String nameOptional) {
+      @RequestParam(value = "name", required = false, defaultValue = "") String nameOptional,
+      @RequestParam(value = "min-price", required = false, defaultValue = "0") Double minPriceOptional,
+      @RequestParam(value = "max-price", required = false, defaultValue = "0") Double maxPriceOptional,
+      @RequestParam(value = "factory", required = false, defaultValue = "") String factoryOptional,
+      @RequestParam(value = "price", required = false, defaultValue = "") String priceOptional) {
 
     int page = 1;
-    final int pageSize = 6;
+    final int pageSize = 60;
     try {
       page = Integer.parseInt(pageOptional);
     } catch (Exception e) {
@@ -169,7 +174,26 @@ public class ItemController {
     }
 
     Pageable pageable = PageRequest.of(page - 1, pageSize);
-    Page<Product> productsPage = this.productService.getAllProducts(pageable, nameOptional);
+
+    // Page<Product> productsPage = this.productService.getAllProducts(pageable,
+    // nameOptional);
+
+    // Page<Product> productsPage = this.productService.getMinAllProducts(pageable,
+    // minPriceOptional);
+
+    // Page<Product> productsPage = this.productService.getMaxAllProducts(pageable,
+    // maxPriceOptional);
+
+    // Page<Product> productsPage =
+    // this.productService.getAllProductsByFactory(pageable,
+    // factoryOptional);
+
+    // List<String> factory = Arrays.asList(factoryOptional.split(","));
+    // Page<Product> productsPage =
+    // this.productService.getAllProductsByFactory(pageable, factory);
+
+    Page<Product> productsPage = this.productService.getAllProductsInRange(pageable, priceOptional);
+
     List<Product> products = productsPage.getContent();
 
     model.addAttribute("products", products);
