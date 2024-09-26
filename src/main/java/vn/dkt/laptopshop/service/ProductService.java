@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
@@ -78,9 +79,9 @@ public class ProductService {
   }
 
   public Page<Product> getAllProductsInRange(Pageable pageable, String price) {
-
     if (price.equals(""))
       return this.productRepository.findAll(pageable);
+
     List<String> priceItem = Arrays.asList(price.split("-")); // 10-toi-15-trieu
     double min = Double.parseDouble(priceItem.get(0)) * 1000000,
         max = Double.parseDouble(priceItem.get(2)) * 1000000;
@@ -96,6 +97,22 @@ public class ProductService {
     // return this.productRepository.findAll(pageable);
     // }
     return this.productRepository.findAll(ProductSpecs.matchPrice(min, max), pageable);
+  }
+
+  public Page<Product> getAllProductsInRange(Pageable pageable, List<String> priceArray) {
+    if (priceArray.get(0).equals(""))
+      return this.productRepository.findAll(pageable);
+
+    Specification<Product> allCriteria = (root, query, criteriaBuilder) -> criteriaBuilder.disjunction();
+    for (String price : priceArray) {
+      List<String> priceItem = Arrays.asList(price.split("-"));
+      double min = Double.parseDouble(priceItem.get(0)) * 1000000,
+          max = Double.parseDouble(priceItem.get(2)) * 1000000;
+      Specification<Product> criteria = ProductSpecs.matchPrice(min, max);
+      allCriteria = allCriteria.or(criteria);
+    }
+    return this.productRepository.findAll(allCriteria, pageable);
+
   }
 
   public Product getProductById(long id) {

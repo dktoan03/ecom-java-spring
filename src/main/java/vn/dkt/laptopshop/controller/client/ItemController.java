@@ -192,7 +192,11 @@ public class ItemController {
     // Page<Product> productsPage =
     // this.productService.getAllProductsByFactory(pageable, factory);
 
-    Page<Product> productsPage = this.productService.getAllProductsInRange(pageable, priceOptional);
+    // Page<Product> productsPage =
+    // this.productService.getAllProductsInRange(pageable, priceOptional);
+
+    List<String> priceArray = Arrays.asList(priceOptional.split(","));
+    Page<Product> productsPage = this.productService.getAllProductsInRange(pageable, priceArray);
 
     List<Product> products = productsPage.getContent();
 

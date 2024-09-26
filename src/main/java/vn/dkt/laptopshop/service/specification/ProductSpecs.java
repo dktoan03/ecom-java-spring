@@ -44,4 +44,11 @@ public class ProductSpecs {
         criteriaBuilder.gt(root.get(Product_.PRICE), min),
         criteriaBuilder.lt(root.get(Product_.PRICE), max));
   }
+
+  // public static Specification<Product> matchPrice(Double min, Double max) {
+
+  // return (root, query, criteriaBuilder) -> criteriaBuilder.between(
+  // root.get(Product_.PRICE), min, max);
+  // }
+
 }
