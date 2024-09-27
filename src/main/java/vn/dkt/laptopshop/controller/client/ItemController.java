@@ -22,6 +22,7 @@ import vn.dkt.laptopshop.domain.CartDetail;
 import vn.dkt.laptopshop.domain.Order;
 import vn.dkt.laptopshop.domain.Product;
 import vn.dkt.laptopshop.domain.User;
+import vn.dkt.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.dkt.laptopshop.service.ProductService;
 import vn.dkt.laptopshop.service.UserService;
 
@@ -157,26 +158,20 @@ public class ItemController {
   }
 
   @GetMapping("/products")
-  public String getProducts(Model model,
-      @RequestParam(value = "page", required = false, defaultValue = "1") String pageOptional,
-      @RequestParam(value = "name", required = false, defaultValue = "") String nameOptional,
-      @RequestParam(value = "min-price", required = false, defaultValue = "0") Double minPriceOptional,
-      @RequestParam(value = "max-price", required = false, defaultValue = "0") Double maxPriceOptional,
-      @RequestParam(value = "factory", required = false, defaultValue = "") String factoryOptional,
-      @RequestParam(value = "price", required = false, defaultValue = "") String priceOptional) {
+  public String getProducts(Model model, ProductCriteriaDTO productCriteriaDTO) {
 
     int page = 1;
     final int pageSize = 60;
     try {
-      page = Integer.parseInt(pageOptional);
+      if (productCriteriaDTO.getPage().isPresent())
+        page = Integer.parseInt(productCriteriaDTO.getPage().get());
     } catch (Exception e) {
 
     }
 
     Pageable pageable = PageRequest.of(page - 1, pageSize);
 
-    // Page<Product> productsPage = this.productService.getAllProducts(pageable,
-    // nameOptional);
+    Page<Product> productsPage = this.productService.getAllProducts(pageable);
 
     // Page<Product> productsPage = this.productService.getMinAllProducts(pageable,
     // minPriceOptional);
@@ -195,8 +190,9 @@ public class ItemController {
     // Page<Product> productsPage =
     // this.productService.getAllProductsInRange(pageable, priceOptional);
 
-    List<String> priceArray = Arrays.asList(priceOptional.split(","));
-    Page<Product> productsPage = this.productService.getAllProductsInRange(pageable, priceArray);
+    // List<String> priceArray = Arrays.asList(priceOptional.split(","));
+    // Page<Product> productsPage =
+    // this.productService.getAllProductsInRange(pageable, priceArray);
 
     List<Product> products = productsPage.getContent();
 
