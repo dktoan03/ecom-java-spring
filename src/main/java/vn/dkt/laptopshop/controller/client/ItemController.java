@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import vn.dkt.laptopshop.domain.Cart;
 import vn.dkt.laptopshop.domain.CartDetail;
 import vn.dkt.laptopshop.domain.Order;
 import vn.dkt.laptopshop.domain.Product;
+import vn.dkt.laptopshop.domain.Product_;
 import vn.dkt.laptopshop.domain.User;
 import vn.dkt.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.dkt.laptopshop.service.ProductService;
@@ -158,10 +160,10 @@ public class ItemController {
   }
 
   @GetMapping("/products")
-  public String getProducts(Model model, ProductCriteriaDTO productCriteriaDTO) {
+  public String getProducts(Model model, ProductCriteriaDTO productCriteriaDTO, HttpServletRequest request) {
 
     int page = 1;
-    final int pageSize = 60;
+    final int pageSize = 2;
     try {
       if (productCriteriaDTO.getPage().isPresent())
         page = Integer.parseInt(productCriteriaDTO.getPage().get());
@@ -170,13 +172,27 @@ public class ItemController {
     }
 
     Pageable pageable = PageRequest.of(page - 1, pageSize);
+    if (productCriteriaDTO.getSort() != null) {
+      if (productCriteriaDTO.getSort().get().equals("gia-tang-dan")) {
+        pageable = PageRequest.of(page - 1, pageSize, Sort.by(Product_.PRICE).ascending());
+      } else if (productCriteriaDTO.getSort().get().equals("gia-giam-dan")) {
+        pageable = PageRequest.of(page - 1, pageSize, Sort.by(Product_.PRICE).descending());
+      }
+    }
+
     Page<Product> productsPage = this.productService.getAllProducts(pageable, productCriteriaDTO);
     List<Product> products = productsPage.getContent() != null ? productsPage.getContent()
         : new ArrayList<Product>();
 
+    String queryString = request.getQueryString();
+    if (queryString != null && !queryString.isBlank()) {
+      queryString = queryString.replace("page=" + page, "");
+    }
     model.addAttribute("products", products);
     model.addAttribute("currentPage", page);
     model.addAttribute("totalPages", productsPage.getTotalPages());
+    model.addAttribute("queryString", queryString);
+
     return "client/product/show";
   }
 }

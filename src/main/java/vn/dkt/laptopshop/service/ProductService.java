@@ -77,60 +77,30 @@ public class ProductService {
       combined = combined.and(currentSpecification);
     }
 
+    if (productCriteriaDTO.getPrice() != null) {
+      Specification<Product> currentSpecification = this.getAllProductsInRange(productCriteriaDTO.getPrice().get());
+      combined = combined.and(currentSpecification);
+    }
     return this.productRepository.findAll(combined, pageable);
   }
 
-  public Page<Product> getMinAllProducts(Pageable pageable, Double price) {
-    return this.productRepository.findAll(ProductSpecs.minPrice(price), pageable);
-  }
-
-  public Page<Product> getMaxAllProducts(Pageable pageable, Double price) {
-    return this.productRepository.findAll(ProductSpecs.maxPrice(price), pageable);
-  }
-
-  public Page<Product> getAllProductsByFactory(Pageable pageable, String factory) {
-    return this.productRepository.findAll(ProductSpecs.factory(factory), pageable);
-  }
-
-  public Page<Product> getAllProductsByFactory(Pageable pageable, List<String> factory) {
-    return this.productRepository.findAll(ProductSpecs.factory(factory), pageable);
-  }
-
-  public Page<Product> getAllProductsInRange(Pageable pageable, String price) {
-    if (price.equals(""))
-      return this.productRepository.findAll(pageable);
-
-    List<String> priceItem = Arrays.asList(price.split("-")); // 10-toi-15-trieu
-    double min = Double.parseDouble(priceItem.get(0)) * 1000000,
-        max = Double.parseDouble(priceItem.get(2)) * 1000000;
-
-    // double min = 0, max = 0;
-    // if (price.equals("10-toi-15-trieu")) {
-    // min = 10000000;
-    // max = 15000000;
-    // } else if (price.equals("15-toi-30-trieu")) {
-    // min = 15000000;
-    // max = 30000000;
-    // } else {
-    // return this.productRepository.findAll(pageable);
-    // }
-    return this.productRepository.findAll(ProductSpecs.matchPrice(min, max), pageable);
-  }
-
-  public Page<Product> getAllProductsInRange(Pageable pageable, List<String> priceArray) {
-    if (priceArray.get(0).equals(""))
-      return this.productRepository.findAll(pageable);
-
-    Specification<Product> allCriteria = (root, query, criteriaBuilder) -> criteriaBuilder.disjunction();
+  public Specification<Product> getAllProductsInRange(List<String> priceArray) {
+    Specification<Product> allCriteria = Specification.where(null);
     for (String price : priceArray) {
       List<String> priceItem = Arrays.asList(price.split("-"));
-      double min = Double.parseDouble(priceItem.get(0)) * 1000000,
-          max = Double.parseDouble(priceItem.get(2)) * 1000000;
+      double min = 0, max = Double.MAX_VALUE;
+      if (priceItem.get(0).equals("tren")) {
+        min = Double.parseDouble(priceItem.get(1)) * 1000000;
+      } else if (priceItem.get(0).equals("duoi")) {
+        max = Double.parseDouble(priceItem.get(1)) * 1000000;
+      } else {
+        min = Double.parseDouble(priceItem.get(0)) * 1000000;
+        max = Double.parseDouble(priceItem.get(1)) * 1000000;
+      }
       Specification<Product> criteria = ProductSpecs.matchPrice(min, max);
       allCriteria = allCriteria.or(criteria);
     }
-    return this.productRepository.findAll(allCriteria, pageable);
-
+    return allCriteria;
   }
 
   public Product getProductById(long id) {
