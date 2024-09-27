@@ -38,6 +38,12 @@ public class ProductSpecs {
     return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.FACTORY)).value(factory);
   }
 
+  public static Specification<Product> target(List<String> target) {
+    if (target.get(0).equals(""))
+      return null;
+    return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.TARGET)).value(target);
+  }
+
   public static Specification<Product> matchPrice(Double min, Double max) {
 
     return (root, query, criteriaBuilder) -> criteriaBuilder.and(

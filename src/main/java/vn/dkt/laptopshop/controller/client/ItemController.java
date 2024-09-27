@@ -170,31 +170,9 @@ public class ItemController {
     }
 
     Pageable pageable = PageRequest.of(page - 1, pageSize);
-
-    Page<Product> productsPage = this.productService.getAllProducts(pageable);
-
-    // Page<Product> productsPage = this.productService.getMinAllProducts(pageable,
-    // minPriceOptional);
-
-    // Page<Product> productsPage = this.productService.getMaxAllProducts(pageable,
-    // maxPriceOptional);
-
-    // Page<Product> productsPage =
-    // this.productService.getAllProductsByFactory(pageable,
-    // factoryOptional);
-
-    // List<String> factory = Arrays.asList(factoryOptional.split(","));
-    // Page<Product> productsPage =
-    // this.productService.getAllProductsByFactory(pageable, factory);
-
-    // Page<Product> productsPage =
-    // this.productService.getAllProductsInRange(pageable, priceOptional);
-
-    // List<String> priceArray = Arrays.asList(priceOptional.split(","));
-    // Page<Product> productsPage =
-    // this.productService.getAllProductsInRange(pageable, priceArray);
-
-    List<Product> products = productsPage.getContent();
+    Page<Product> productsPage = this.productService.getAllProducts(pageable, productCriteriaDTO);
+    List<Product> products = productsPage.getContent() != null ? productsPage.getContent()
+        : new ArrayList<Product>();
 
     model.addAttribute("products", products);
     model.addAttribute("currentPage", page);

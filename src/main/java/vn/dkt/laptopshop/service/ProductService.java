@@ -15,12 +15,14 @@ import vn.dkt.laptopshop.domain.Order;
 import vn.dkt.laptopshop.domain.OrderDetail;
 import vn.dkt.laptopshop.domain.Product;
 import vn.dkt.laptopshop.domain.User;
+import vn.dkt.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.dkt.laptopshop.repository.CartDetailRepository;
 import vn.dkt.laptopshop.repository.CartRepository;
 import vn.dkt.laptopshop.repository.OrderDetailRepository;
 import vn.dkt.laptopshop.repository.OrderRepository;
 import vn.dkt.laptopshop.repository.ProductRepository;
 import vn.dkt.laptopshop.service.specification.ProductSpecs;
+import org.springframework.data.jpa.domain.Specification;
 
 @Service
 public class ProductService {
@@ -58,8 +60,24 @@ public class ProductService {
     return this.productRepository.findAll(pageable);
   }
 
-  public Page<Product> getAllProducts(Pageable pageable, String name) {
-    return this.productRepository.findAll(ProductSpecs.nameLike(name), pageable);
+  public Page<Product> getAllProducts(Pageable pageable, ProductCriteriaDTO productCriteriaDTO) {
+    if (productCriteriaDTO.getTarget() == null &&
+        productCriteriaDTO.getFactory() == null &&
+        productCriteriaDTO.getSort() == null)
+      return this.productRepository.findAll(pageable);
+
+    Specification<Product> combined = Specification.where(null);
+    if (productCriteriaDTO.getTarget() != null) {
+      Specification<Product> currentSpecification = ProductSpecs.target(productCriteriaDTO.getTarget().get());
+      combined = combined.and(currentSpecification);
+    }
+
+    if (productCriteriaDTO.getFactory() != null) {
+      Specification<Product> currentSpecification = ProductSpecs.factory(productCriteriaDTO.getFactory().get());
+      combined = combined.and(currentSpecification);
+    }
+
+    return this.productRepository.findAll(combined, pageable);
   }
 
   public Page<Product> getMinAllProducts(Pageable pageable, Double price) {
