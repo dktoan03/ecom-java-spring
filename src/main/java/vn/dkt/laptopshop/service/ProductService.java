@@ -22,7 +22,6 @@ import vn.dkt.laptopshop.repository.OrderDetailRepository;
 import vn.dkt.laptopshop.repository.OrderRepository;
 import vn.dkt.laptopshop.repository.ProductRepository;
 import vn.dkt.laptopshop.service.specification.ProductSpecs;
-import org.springframework.data.jpa.domain.Specification;
 
 @Service
 public class ProductService {
